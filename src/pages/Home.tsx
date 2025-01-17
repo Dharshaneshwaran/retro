@@ -54,7 +54,8 @@ function Home() {
           Retro File Converter Hub
         </h1>
         <p style={{ fontSize: '1.2rem', color: '#6b7280', maxWidth: '600px', margin: '0 auto' }}>
-        Convert files in style. Fast, easy, and beautifully vintage.
+          Convert files in style. Fast, easy, and beautifully vintage.
+        </p>
       </header>
 
       <div style={{ 
@@ -76,6 +77,7 @@ function Home() {
               boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
               transition: 'transform 0.2s ease, box-shadow 0.2s ease',
               cursor: 'pointer',
+              position: 'relative', // Added to position "Popular" label correctly
             }}
             onMouseOver={(e) => {
               e.currentTarget.style.transform = 'scale(1.05)';
