@@ -4,7 +4,7 @@ import { ArrowRight, FileImage, FileText, FileCheck, FileCode2, Files } from 'lu
 
 function Home() {
   const navigate = useNavigate();
-  
+
   const converters = [
     { name: 'JPG to PDF', icon: <FileImage size={48} />, path: '/jpg-to-pdf' },
     { name: 'PNG to JPG', icon: <FileImage size={48} />, path: '/png-to-jpg' },
@@ -39,61 +39,51 @@ function Home() {
 
   return (
     <div style={{ 
-      textAlign: 'center', 
-      marginTop: '0', 
-      fontFamily: 'Courier New, monospace',
-      backgroundColor: '#f4ede5',
-      color: '#3e2723',
-      padding: '2.5rem',
-      border: '3px solid #7a5230',
-      borderRadius: '15px',
-      boxShadow: '8px 8px 15px rgba(0, 0, 0, 0.2)',
-      minHeight: '100vh'
+      fontFamily: 'Poppins, sans-serif',
+      backgroundColor: '#f9f9f9',
+      color: '#333',
+      padding: '2rem',
     }}>
-      <h1 style={{ 
-        fontSize: '3.5rem', 
-        marginBottom: '1.5rem', 
-        textShadow: '3px 3px 4px #7a5230'
-      }}>
-        Retro File Converter Hub
-      </h1>
-      <p style={{ 
-        fontSize: '1.5rem', 
-        marginBottom: '2.5rem', 
-        fontStyle: 'italic', 
-        lineHeight: '1.6' 
-      }}>
+      <header style={{ textAlign: 'center', marginBottom: '3rem' }}>
+        <h1 style={{ 
+          fontSize: '3rem', 
+          fontWeight: 'bold', 
+          color: '#2f3b52', 
+          marginBottom: '0.5rem',
+        }}>
+          Retro File Converter Hub
+        </h1>
+        <p style={{ fontSize: '1.2rem', color: '#6b7280', maxWidth: '600px', margin: '0 auto' }}>
         Convert files in style. Fast, easy, and beautifully vintage.
-      </p>
-      
+      </header>
+
       <div style={{ 
         display: 'grid', 
-        gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', 
-        gap: '2.5rem', 
-        marginTop: '4rem' 
+        gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', 
+        gap: '1.5rem', 
+        padding: '1rem',
       }}>
         {converters.map((converter) => (
           <div 
             key={converter.path}
             onClick={() => navigate(converter.path)}
             style={{
-              backgroundColor: '#f4ede5',
-              border: '2px solid #7a5230',
-              padding: '2rem',
-              borderRadius: '12px',
-              cursor: 'pointer',
-              boxShadow: '5px 5px 10px #7a5230',
-              transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+              backgroundColor: '#ffffff',
+              border: '1px solid #e5e7eb',
+              borderRadius: '10px',
+              padding: '1.5rem',
               textAlign: 'center',
-              position: 'relative'
+              boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+              transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+              cursor: 'pointer',
             }}
             onMouseOver={(e) => {
-              e.currentTarget.style.transform = 'scale(1.08)';
-              e.currentTarget.style.boxShadow = '6px 6px 12px #5a3b1d';
+              e.currentTarget.style.transform = 'scale(1.05)';
+              e.currentTarget.style.boxShadow = '0 8px 12px rgba(0, 0, 0, 0.15)';
             }}
             onMouseOut={(e) => {
               e.currentTarget.style.transform = 'scale(1)';
-              e.currentTarget.style.boxShadow = '5px 5px 10px #7a5230';
+              e.currentTarget.style.boxShadow = '0 4px 6px rgba(0, 0, 0, 0.1)';
             }}
           >
             {converter.popular && (
@@ -101,18 +91,18 @@ function Home() {
                 position: 'absolute',
                 top: '-10px',
                 right: '-10px',
-                backgroundColor: '#e63946',
+                backgroundColor: '#f97316',
                 color: 'white',
                 padding: '4px 8px',
-                borderRadius: '12px',
-                fontSize: '0.8rem',
-                fontWeight: 'bold'
+                borderRadius: '50px',
+                fontSize: '0.75rem',
+                fontWeight: 'bold',
               }}>
                 Popular
               </div>
             )}
-            <div style={{ marginBottom: '1.2rem' }}>{converter.icon}</div>
-            <div style={{ fontSize: '1.4rem', fontWeight: 'bold' }}>{converter.name}</div>
+            <div style={{ marginBottom: '1rem', color: '#4a5568' }}>{converter.icon}</div>
+            <div style={{ fontSize: '1rem', fontWeight: '500', color: '#2d3748' }}>{converter.name}</div>
           </div>
         ))}
       </div>

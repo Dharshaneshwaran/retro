@@ -25,30 +25,49 @@ function Navbar() {
   return (
     <nav
       style={{
-        backgroundColor: '#7a5230',
-        padding: '1rem',
+        backgroundColor: '#ffffff',
+        padding: '1rem 2rem',
         position: 'fixed',
         top: 0,
         width: '100%',
         zIndex: 1000,
-        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2)',
+        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+        borderRadius: '8px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
       }}
     >
       <div
         style={{
           display: 'flex',
-          justifyContent: 'center',
-          flexWrap: 'wrap',
+          alignItems: 'center',
           gap: '1rem',
         }}
       >
+        <div
+          style={{
+            backgroundColor: '#6c63ff',
+            padding: '0.5rem',
+            borderRadius: '50%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <HomeIcon size={24} color="#ffffff" />
+        </div>
         {visibleNavItems.map((item) => (
           <button
             key={item.path}
-            onClick={() => navigate(item.path)}
+            onClick={() => {
+              if (location.pathname !== item.path) {
+                navigate(item.path, { replace: true });
+              }
+            }}
             style={{
-              backgroundColor: location.pathname === item.path ? '#5a3b1d' : 'transparent',
-              color: '#f4ede5',
+              backgroundColor: location.pathname === item.path ? '#e5e7eb' : 'transparent',
+              color: '#374151',
               border: 'none',
               padding: '0.5rem 1rem',
               borderRadius: '8px',
@@ -57,34 +76,40 @@ function Navbar() {
               alignItems: 'center',
               gap: '0.5rem',
               fontSize: '1rem',
-              fontFamily: 'Courier New, monospace',
-              whiteSpace: 'nowrap',
+              fontWeight: '500',
               transition: 'background-color 0.3s ease',
-              textShadow: '1px 1px 2px rgba(0, 0, 0, 0.2)',
             }}
           >
             {item.icon}
             {item.name}
           </button>
         ))}
+      </div>
 
+      <div
+        style={{
+          display: 'flex',
+          alignItems: 'center',
+          gap: '1rem',
+        }}
+      >
         <button
           onClick={() => setShowAll((prev) => !prev)}
           style={{
-            backgroundColor: '#6a4628',
-            color: '#f4ede5',
+            backgroundColor: '#6c63ff',
+            color: '#ffffff',
             border: 'none',
             padding: '0.5rem 1rem',
             borderRadius: '8px',
             cursor: 'pointer',
             fontSize: '1rem',
-            fontFamily: 'Courier New, monospace',
-            whiteSpace: 'nowrap',
+            fontWeight: '500',
             transition: 'background-color 0.3s ease',
           }}
         >
           {showAll ? 'View Less' : 'View More'}
         </button>
+       
       </div>
     </nav>
   );
