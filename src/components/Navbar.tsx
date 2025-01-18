@@ -31,11 +31,12 @@ function Navbar() {
         top: 0,
         width: '100%',
         zIndex: 1000,
-        boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
-        borderRadius: '8px',
+        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
+        borderBottom: '2px solid #e5e7eb',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
+        flexWrap: 'wrap',
       }}
     >
       <div
@@ -43,17 +44,21 @@ function Navbar() {
           display: 'flex',
           alignItems: 'center',
           gap: '1rem',
+          flexWrap: 'wrap',
         }}
       >
         <div
           style={{
-            backgroundColor: '#6c63ff',
-            padding: '0.5rem',
+            backgroundColor: '#4F46E5',
+            padding: '0.6rem',
             borderRadius: '50%',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
+            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+            cursor: 'pointer',
           }}
+          onClick={() => navigate('/')}
         >
           <HomeIcon size={24} color="#ffffff" />
         </div>
@@ -66,18 +71,22 @@ function Navbar() {
               }
             }}
             style={{
-              backgroundColor: location.pathname === item.path ? '#e5e7eb' : 'transparent',
-              color: '#374151',
-              border: 'none',
-              padding: '0.5rem 1rem',
-              borderRadius: '8px',
+              backgroundColor: location.pathname === item.path ? '#E0E7FF' : 'transparent',
+              color: location.pathname === item.path ? '#4F46E5' : '#374151',
+              border: '1px solid #E5E7EB',
+              padding: '0.6rem 1rem',
+              borderRadius: '10px',
               cursor: 'pointer',
               display: 'flex',
               alignItems: 'center',
-              gap: '0.5rem',
+              gap: '0.6rem',
               fontSize: '1rem',
               fontWeight: '500',
-              transition: 'background-color 0.3s ease',
+              transition: 'all 0.3s ease',
+              boxShadow: location.pathname === item.path
+                ? '0 2px 6px rgba(79, 70, 229, 0.3)'
+                : 'none',
+              whiteSpace: 'nowrap',
             }}
           >
             {item.icon}
@@ -96,23 +105,24 @@ function Navbar() {
         <button
           onClick={() => setShowAll((prev) => !prev)}
           style={{
-            backgroundColor: '#6c63ff',
+            backgroundColor: '#4F46E5',
             color: '#ffffff',
             border: 'none',
-            padding: '0.5rem 1rem',
-            borderRadius: '8px',
+            padding: '0.6rem 1.2rem',
+            borderRadius: '10px',
             cursor: 'pointer',
             fontSize: '1rem',
-            fontWeight: '500',
+            fontWeight: '600',
             transition: 'background-color 0.3s ease',
+            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
           }}
         >
           {showAll ? 'View Less' : 'View More'}
         </button>
-       
       </div>
     </nav>
   );
 }
 
 export default Navbar;
+

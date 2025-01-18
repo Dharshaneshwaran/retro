@@ -52,35 +52,87 @@ function JpgToPdf() {
   };
 
   return (
-    <div style={retroStyles.container}>
-      <h1 style={retroStyles.title}>JPG to PDF Converter</h1>
-      <p style={retroStyles.subtitle}>
+    <div style={{
+      textAlign: 'center',
+      marginTop: '0',
+      fontFamily: 'Inter, sans-serif',
+      backgroundColor: '#fafafa',
+      padding: '4rem',
+      minHeight: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+    }}>
+      <h1 style={{
+        fontSize: '4rem',
+        fontWeight: 'bold',
+        background: 'linear-gradient(90deg, #4caf50, #f44336)',
+        WebkitBackgroundClip: 'text',
+        color: 'transparent',
+        marginBottom: '1rem',
+      }}>
+        JPG to PDF Converter
+      </h1>
+      <p style={{
+        fontSize: '1.2rem',
+        color: '#666',
+        marginBottom: '2rem',
+      }}>
         Transform your JPG images into professional PDF documents with our retro-styled converter
       </p>
 
       <div
         {...getRootProps()}
         style={{
-          ...retroStyles.dropZone,
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          border: '2px dashed #7a5230',
           backgroundColor: isDragActive ? '#e6d5c7' : '#f8f4f1',
+          padding: '2rem',
+          borderRadius: '12px',
+          cursor: 'pointer',
+          transition: 'transform 0.2s ease, background-color 0.2s ease',
           transform: isDragActive ? 'scale(1.02)' : 'scale(1)',
+          width: '100%',
+          maxWidth: '600px',
+          marginBottom: '2rem',
         }}
       >
         <input {...getInputProps()} />
-        <div style={{ textAlign: 'center' }}>
-          <Image size={48} style={{ margin: '0 auto', color: '#7a5230' }} />
-          <p style={{ marginTop: '1rem', color: '#3e2723' }}>
-            Drag & drop JPG files here, or click to select
-          </p>
-        </div>
+        <Image size={48} style={{ margin: '0 auto', color: '#7a5230' }} />
+        <p style={{ marginTop: '1rem', color: '#3e2723', fontSize: '1.2rem' }}>
+          Drag & drop JPG files here, or click to select
+        </p>
       </div>
 
       {files.length > 0 && (
-        <div style={{ marginTop: '2rem' }}>
-          <div style={{ display: 'grid', gap: '1rem' }}>
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          width: '100%',
+          maxWidth: '600px',
+        }}>
+          <div style={{
+            display: 'grid',
+            gap: '1rem',
+            width: '100%',
+          }}>
             {files.map((file, index) => (
-              <div key={index} style={retroStyles.filePreview}>
-                <span style={{ fontSize: '1.1rem' }}>{file.name}</span>
+              <div key={index} style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                background: '#fff',
+                border: '1px solid #ddd',
+                padding: '1rem',
+                borderRadius: '8px',
+                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
+              }}>
+                <span style={{ fontSize: '1rem', color: '#3e2723' }}>{file.name}</span>
                 <button
                   onClick={() => setFiles(files.filter((_, i) => i !== index))}
                   style={{
@@ -102,9 +154,23 @@ function JpgToPdf() {
             onClick={handleConvert}
             disabled={converting || converted}
             style={{
-              ...retroStyles.button,
               marginTop: '2rem',
+              padding: '0.8rem 1.5rem',
+              fontSize: '1rem',
+              fontWeight: 'bold',
+              background: 'linear-gradient(90deg, #4caf50, #f44336)',
+              border: 'none',
+              borderRadius: '8px',
+              color: '#fff',
+              cursor: 'pointer',
+              transition: 'background 0.3s ease',
               opacity: converting || converted ? 0.7 : 1,
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.background = 'linear-gradient(90deg, #388e3c, #d32f2f)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.background = 'linear-gradient(90deg, #4caf50, #f44336)';
             }}
           >
             {converting ? 'Converting...' : converted ? 'Converted!' : 'Convert to PDF'}

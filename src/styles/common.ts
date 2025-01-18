@@ -3,7 +3,7 @@ export const retroStyles = {
     textAlign: 'center' as const,
     marginTop: '2rem',
     fontFamily: 'Courier New, monospace',
-    backgroundColor: '#f4ede5',
+    backgroundColor: '#FFFFFF',
     color: '#3e2723',
     padding: '2.5rem',
     border: '3px solid #7a5230',
