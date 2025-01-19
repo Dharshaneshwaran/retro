@@ -1,17 +1,18 @@
 import React, { useState, useCallback } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { jsPDF } from 'jspdf';
-import { Image, Trash2, Download } from 'lucide-react';
-import { retroStyles } from '../styles/common';
+import { Image, Trash2 } from 'lucide-react';
 
 function JpgToPdf() {
   const [files, setFiles] = useState<File[]>([]);
   const [converting, setConverting] = useState(false);
   const [converted, setConverted] = useState(false);
+  const [pdfUrl, setPdfUrl] = useState<string | null>(null);
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
     setFiles(acceptedFiles);
     setConverted(false);
+    setPdfUrl(null);
   }, []);
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -25,28 +26,25 @@ function JpgToPdf() {
   const handleConvert = async () => {
     setConverting(true);
 
-    // Create a new PDF document
     const pdf = new jsPDF();
 
-    // Load each image and add it to the PDF
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
 
-      // Convert the file to a base64 image
       const imageBase64 = await new Promise<string>((resolve) => {
         const reader = new FileReader();
         reader.onload = () => resolve(reader.result as string);
         reader.readAsDataURL(file);
       });
 
-      // Add the image to the PDF
       if (i > 0) pdf.addPage();
-      pdf.addImage(imageBase64, 'JPEG', 10, 10, 190, 0); // Adjust dimensions as needed
+      pdf.addImage(imageBase64, 'JPEG', 10, 10, 190, 0);
     }
 
-    // Save the PDF file
-    pdf.save('converted.pdf');
+    const blob = pdf.output('blob');
+    const url = URL.createObjectURL(blob);
 
+    setPdfUrl(url);
     setConverting(false);
     setConverted(true);
   };
@@ -175,6 +173,27 @@ function JpgToPdf() {
           >
             {converting ? 'Converting...' : converted ? 'Converted!' : 'Convert to PDF'}
           </button>
+
+          {pdfUrl && (
+            <a
+              href={pdfUrl}
+              download="converted.pdf"
+              style={{
+                marginTop: '1rem',
+                padding: '0.8rem 1.5rem',
+                fontSize: '1rem',
+                fontWeight: 'bold',
+                background: 'linear-gradient(90deg, #4caf50, #f44336)',
+                border: 'none',
+                borderRadius: '8px',
+                color: '#fff',
+                textDecoration: 'none',
+                cursor: 'pointer',
+              }}
+            >
+              Download PDF
+            </a>
+          )}
         </div>
       )}
     </div>
