@@ -7,122 +7,74 @@ function Navbar() {
   const location = useLocation();
 
   const allNavItems = [
-    { name: 'Home', icon: <HomeIcon size={24} />, path: '/' },
-    { name: 'PDF to PPT', icon: <FileText size={24} />, path: '/pdf-to-ppt' },
-    { name: 'PDF to Excel', icon: <FileCheck size={24} />, path: '/pdf-to-excel' },
-    { name: 'DOCX to PDF', icon: <FileText size={24} />, path: '/docx-to-pdf' },
-    { name: 'Image Resizer', icon: <FileImage size={24} />, path: '/image-resizer' },
-    { name: 'JPG to PDF', icon: <FileImage size={24} />, path: '/jpg-to-pdf' },
-    { name: 'XML to SVG', icon: <FileCode2 size={24} />, path: '/xml-to-svg' },
-    { name: 'PDF to Word', icon: <FileText size={24} />, path: '/pdf-to-word' },
-    { name: 'TIFF to PNG', icon: <FileImage size={24} />, path: '/tiff-to-png' },
-    { name: 'HTML to Markdown', icon: <FileCode2 size={24} />, path: '/html-to-markdown' },
+    { name: 'Home', icon: <HomeIcon size={20} />, path: '/' },
+    { name: 'PDF to PPT', icon: <FileText size={20} />, path: '/pdf-to-ppt' },
+    { name: 'PDF to Excel', icon: <FileCheck size={20} />, path: '/pdf-to-excel' },
+    { name: 'DOCX to PDF', icon: <FileText size={20} />, path: '/docx-to-pdf' },
+    { name: 'Image Resizer', icon: <FileImage size={20} />, path: '/image-resizer' },
+    { name: 'JPG to PDF', icon: <FileImage size={20} />, path: '/jpg-to-pdf' },
+    { name: 'XML to SVG', icon: <FileCode2 size={20} />, path: '/xml-to-svg' },
+    { name: 'PDF to Word', icon: <FileText size={20} />, path: '/pdf-to-word' },
+    { name: 'TIFF to PNG', icon: <FileImage size={20} />, path: '/tiff-to-png' },
+    { name: 'HTML to Markdown', icon: <FileCode2 size={20} />, path: '/html-to-markdown' },
   ];
 
   const [showAll, setShowAll] = useState(false);
   const visibleNavItems = showAll ? allNavItems : allNavItems.slice(0, 4);
 
   return (
-    <nav
-      style={{
-        backgroundColor: '#ffffff',
-        padding: '1rem 2rem',
-        position: 'fixed',
-        top: 0,
-        width: '100%',
-        zIndex: 1000,
-        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.1)',
-        borderBottom: '2px solid #e5e7eb',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        flexWrap: 'wrap',
-      }}
-    >
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '1rem',
-          flexWrap: 'wrap',
-        }}
-      >
+    <nav className="fixed top-0 left-0 w-full bg-white shadow-md border-b border-gray-200 z-50">
+      <div className="flex items-center justify-between px-4 py-3 md:px-6 md:py-4">
+        {/* Logo Section */}
         <div
-          style={{
-            backgroundColor: '#4F46E5',
-            padding: '0.6rem',
-            borderRadius: '50%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-            cursor: 'pointer',
-          }}
+          className="flex items-center justify-center w-10 h-10 bg-indigo-600 rounded-full cursor-pointer"
           onClick={() => navigate('/')}
         >
-          <HomeIcon size={24} color="#ffffff" />
+          <HomeIcon size={20} color="white" />
         </div>
-        {visibleNavItems.map((item) => (
-          <button
-            key={item.path}
-            onClick={() => {
-              if (location.pathname !== item.path) {
-                navigate(item.path, { replace: true });
-              }
-            }}
-            style={{
-              backgroundColor: location.pathname === item.path ? '#E0E7FF' : 'transparent',
-              color: location.pathname === item.path ? '#4F46E5' : '#374151',
-              border: '1px solid #E5E7EB',
-              padding: '0.6rem 1rem',
-              borderRadius: '10px',
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.6rem',
-              fontSize: '1rem',
-              fontWeight: '500',
-              transition: 'all 0.3s ease',
-              boxShadow: location.pathname === item.path
-                ? '0 2px 6px rgba(79, 70, 229, 0.3)'
-                : 'none',
-              whiteSpace: 'nowrap',
-            }}
-          >
-            {item.icon}
-            {item.name}
-          </button>
-        ))}
-      </div>
 
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '1rem',
-        }}
-      >
+        {/* Navigation Items */}
+        <div className="hidden md:flex flex-wrap items-center gap-4">
+          {visibleNavItems.map((item) => (
+            <button
+              key={item.path}
+              onClick={() => location.pathname !== item.path && navigate(item.path)}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-all shadow-sm border
+                ${location.pathname === item.path ? 'bg-indigo-100 text-indigo-600 border-indigo-300' : 'bg-white text-gray-700 border-gray-200'}`}
+            >
+              {item.icon}
+              {item.name}
+            </button>
+          ))}
+        </div>
+
+        {/* Toggle Button */}
         <button
           onClick={() => setShowAll((prev) => !prev)}
-          style={{
-            backgroundColor: '#4F46E5',
-            color: '#ffffff',
-            border: 'none',
-            padding: '0.6rem 1.2rem',
-            borderRadius: '10px',
-            cursor: 'pointer',
-            fontSize: '1rem',
-            fontWeight: '600',
-            transition: 'background-color 0.3s ease',
-            boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
-          }}
+          className="px-4 py-2 bg-indigo-600 text-white rounded-lg font-semibold text-sm shadow-md hover:bg-indigo-700 md:hidden"
         >
           {showAll ? 'View Less' : 'View More'}
         </button>
       </div>
+
+      {/* Mobile Navigation */}
+      {showAll && (
+        <div className="flex flex-col items-start gap-3 px-4 py-3 md:hidden">
+          {allNavItems.map((item) => (
+            <button
+              key={item.path}
+              onClick={() => location.pathname !== item.path && navigate(item.path)}
+              className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium text-sm transition-all shadow-sm border w-full
+                ${location.pathname === item.path ? 'bg-indigo-100 text-indigo-600 border-indigo-300' : 'bg-white text-gray-700 border-gray-200'}`}
+            >
+              {item.icon}
+              {item.name}
+            </button>
+          ))}
+        </div>
+      )}
     </nav>
   );
 }
 
 export default Navbar;
-

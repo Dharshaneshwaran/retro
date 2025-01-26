@@ -3,13 +3,19 @@ import { jsPDF } from 'jspdf';
 import { Image, Trash2 } from 'lucide-react';
 
 const JpgToPdf = () => {
-  const [files, setFiles] = useState([]);
-  const [draggedItem, setDraggedItem] = useState(null);
-  const [pdfUrl, setPdfUrl] = useState(null);
-  const fileInputRef = useRef(null);
+  interface FileWithPreview {
+    file: File;
+    id: string;
+    preview: string;
+  }
+  
+  const [files, setFiles] = useState<FileWithPreview[]>([]);
+  const [draggedItem, setDraggedItem] = useState<number | null>(null);
+  const [pdfUrl, setPdfUrl] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleFileSelect = (event) => {
-    const selectedFiles = Array.from(event.target.files);
+  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFiles = Array.from(event.target.files as FileList);
     const newFiles = selectedFiles.map(file => ({
       file,
       id: Math.random().toString(36).substring(7),
@@ -18,13 +24,13 @@ const JpgToPdf = () => {
     setFiles(prev => [...prev, ...newFiles]);
   };
 
-  const handleDragStart = (e, index) => {
+  const handleDragStart = (e: React.DragEvent<HTMLDivElement>, index: number) => {
     setDraggedItem(index);
     e.dataTransfer.effectAllowed = 'move';
-    e.dataTransfer.setData('text/plain', index);
+    e.dataTransfer.setData('text/plain', index.toString());
   };
 
-  const handleDragOver = (e, index) => {
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>, index: number) => {
     e.preventDefault();
     if (draggedItem === null) return;
 
@@ -41,7 +47,7 @@ const JpgToPdf = () => {
     setDraggedItem(null);
   };
 
-  const handleDrop = (e) => {
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     const droppedFiles = Array.from(e.dataTransfer.files);
     if (droppedFiles.length > 0) {
@@ -54,7 +60,7 @@ const JpgToPdf = () => {
     }
   };
 
-  const removeFile = (indexToRemove) => {
+  const removeFile = (indexToRemove: number) => {
     setFiles(files.filter((_, index) => index !== indexToRemove));
   };
 
@@ -63,9 +69,9 @@ const JpgToPdf = () => {
 
     for (let i = 0; i < files.length; i++) {
       const file = files[i].file;
-      const imageBase64 = await new Promise((resolve) => {
+      const imageBase64 = await new Promise<string>((resolve) => {
         const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
+        reader.onload = () => resolve(reader.result as string);
         reader.readAsDataURL(file);
       });
 
@@ -81,7 +87,12 @@ const JpgToPdf = () => {
   return (
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-3xl font-bold text-gray-800 mb-8">JPG to PDF Converter</h1>
+        <h1 className="text-3xl font-bold text-gray-800 mb-4 text-center">
+          JPG to PDF Converter
+        </h1>
+        <p className="text-gray-600 text-center mb-8">
+          Easily combine your JPG images into a single, shareable PDF document in just a few clicks.
+        </p>
 
         <div 
           className="mb-8 border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:border-gray-400 transition-colors"
@@ -161,6 +172,8 @@ const JpgToPdf = () => {
             </a>
           </div>
         )}
+
+        
       </div>
     </div>
   );
